@@ -5,21 +5,37 @@ import {Navigation} from 'react-native-navigation';
 
 import { addPlace } from '../../store/actions/index';
 import PlaceInput from '../../components/PlaceInput/PlaceInput';
-import DefaultInput from '../../components/UI/DefaultInput/DefaultInput';
 import MainText from "../../components/UI/MainText/MainText";
 import HeadingText from "../../components/UI/HeadingText/HeadingText";
-import imagePlaceHolder from '../../assets/3.jpg';
+
+import PickImage from "../../components/PickImage/PickImage";
+import PickLocation from "../../components/PickLocation/PickLocation";
+
 
 class SharePlaceScreen extends Component {
+
+    state = {
+        placeName: ""
+    };
 
     constructor(props){
         super(props);
         Navigation.events().bindComponent(this);
     };
 
-    placeAddedHandler = placeName => {
-        this.props.onAddPlace(placeName);
+    placeAddedHandler = () => {
+        if(this.state.placeName.trim() !== ''){
+            this.props.onAddPlace(this.state.placeName);
+        }
     }
+
+    placeNameChangedHandler = val =>{
+            this.setState(
+                {
+                    placeName:val
+                }
+            )
+    };
 
     render () {
         return (
@@ -30,21 +46,11 @@ class SharePlaceScreen extends Component {
                             Share a Place with us!
                         </HeadingText>
                     </MainText>
-                    <View style={styles.placeholder}>
-                        <Image source={imagePlaceHolder} style={styles.previewImage}></Image>
-                    </View>
-                    <View  style={styles.button}>
-                        <Button title="Pick a image" />
-                    </View>
-                    <View style={styles.placeholder}>
-                        <Text>Map</Text>
-                    </View>
+                    <PickImage/>
+                    <PickLocation/>
+                    <PlaceInput placeName={this.state.placeName} onChangeText={this.placeNameChangedHandler}/>
                     <View style={styles.button}>
-                        <Button title="Locate me" />
-                    </View>
-                    <DefaultInput placeholder="Place Name"/>
-                    <View style={styles.button}>
-                        <Button title="Share the Place"/>
+                        <Button title="Share the Place" onPress={this.placeAddedHandler}/>
                     </View>
                 </View>
             </ScrollView>
@@ -58,20 +64,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center"
-    },
-    placeholder: {
-        borderWidth: 1,
-        borderColor: "black",
-        backgroundColor: "#eee",
-        width: "80%",
-        height: 150
-    },
-    button: {
-        margin: 8
-    },
-    previewImage: {
-        width: "100%",
-        height: "100%"
     }
 });
 

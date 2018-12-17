@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
         backgroundColor:'#eee'
     },
     drawerItemIcon:{
-        marginRight:10
+        marginRight:10,
+        marginLeft:5
     }
 });
 

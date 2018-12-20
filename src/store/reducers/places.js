@@ -14,7 +14,8 @@ const reducer = (state = initialState, action) => {
                         name:action.placeName,
                         image:{
                           uri:'https://www.w3schools.com/bootstrap/paris.jpg'
-                        }
+                        },
+                        location: action.location
                     })
             };
         case DELETE_PLACE:

@@ -20,27 +20,32 @@ Navigation.registerComponentWithRedux("myProject.FindPlaceScreen",() => FindPlac
 Navigation.registerComponentWithRedux("myProject.PlaceDetailScreen",() => PlaceDetailScreen,Provider,store);
 Navigation.registerComponentWithRedux("myProject.SideDrawer",() => SideDrawer,Provider,store);
 
+
 //Start an App
 Navigation.events().registerAppLaunchedListener(() => {
-Navigation.setRoot({
-    root: {
-        stack: {
-            children: [{
-                component: {
-                    name: 'myProject.AuthScreen'
-                    ,passProps: {
-                        text: 'stack with one child'
+    app();
+});
+
+export default app = () =>{
+    Navigation.setRoot({
+        root: {
+            stack: {
+                children: [{
+                    component: {
+                        name: 'myProject.AuthScreen'
+                        , passProps: {
+                            text: 'stack with one child'
+                        }
                     }
-                }
-            }],
-            options: {
-                topBar: {
-                    title: {
-                        text: 'Login'
+                }],
+                options: {
+                    topBar: {
+                        title: {
+                            text: 'Login'
+                        }
                     }
                 }
             }
         }
-    }
-});
-});
+    });
+}

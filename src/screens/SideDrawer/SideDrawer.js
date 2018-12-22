@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import {View,Text,StyleSheet, TouchableOpacity} from 'react-native';
 import Iconss from 'react-native-vector-icons/Ionicons';
+import { connect } from "react-redux";
+
+import {authLogout} from '../../store/actions/index';
 
 class SideDrawer extends Component{
 
     render(){
         return(
             <View style={styles.container}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.props.logout}>
                     <View style={styles.drawerItem}>
                         <Iconss name="md-log-out" color="black" style={styles.drawerItemIcon}/>
                         <Text>Sign Out</Text>
@@ -36,4 +39,11 @@ const styles = StyleSheet.create({
     }
 });
 
-export default  SideDrawer;
+const mapDispatchToProps = dispatch => {
+    return {
+        logout: () => dispatch(authLogout()),
+    };
+};
+
+
+export default  connect(null,mapDispatchToProps)(SideDrawer);

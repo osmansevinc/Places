@@ -10,7 +10,7 @@ import ButtonWithBackground from '../../components/UI/ButtonWithBackground/Butto
 import validate from '../../utility/validation';
 import backgroundImage from '../../assets/background.jpg';
 
-import { tryAuth } from '../../store/actions/index';
+import { tryAuth,authAutoSignIn } from '../../store/actions/index';
 
 class AuthScreen extends Component {
 
@@ -49,6 +49,10 @@ class AuthScreen extends Component {
         super(props);
         Dimensions.addEventListener('change', this.updateStyles);
     };
+
+    componentDidMount(){
+        this.props.authAuto();
+    }
 
     componentWillUnmount(){
         Dimensions.removeEventListener('change',this.updateStyles);
@@ -217,7 +221,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onTryAuth: (authData,authMode) => dispatch(tryAuth(authData,authMode))
+        onTryAuth: (authData,authMode) => dispatch(tryAuth(authData,authMode)),
+        authAuto: () => dispatch(authAutoSignIn())
     };
 };
 

@@ -24,6 +24,34 @@ class PlaceDetail extends Component{
     constructor(props) {
         super(props);
         Dimensions.addEventListener("change", this.updateStyles);
+        Navigation.events().bindComponent(this);
+    }
+
+    componentWillMount(){
+
+        Promise.all([
+            Iconss.getImageSource('md-return-left',30)
+        ]).then(sources => {
+            Navigation.mergeOptions(this.props.componentId, {
+                topBar: {
+                    rightButtons: [
+                        {
+                            id: 'returnButton',
+                            icon: sources[0]
+                        }
+                    ]
+                }
+            });
+        })
+    }
+
+    navigationButtonPressed({ returnButton }) {
+        Navigation.mergeOptions(this.props.componentId, {
+            topBar: {
+                rightButtons: []
+            }
+        });
+        Navigation.pop(this.props.componentId);
     }
 
     componentWillUnmount() {
